@@ -6,6 +6,13 @@ enum node_type {
     OP_NODE,
 };
 
+enum op {
+    ADD,
+    SUB,
+    MULT,
+    DIV,
+};
+
 struct node {
     enum node_type type;
     union {
@@ -22,6 +29,15 @@ struct node *node_new_value(double value) {
     new->data.value = value;
     new->left = NULL;
     new->right = NULL;
+    return new;
+}
+
+struct node *node_new_op(enum op op, struct node *l, struct node *r) {
+    struct node *new = malloc(sizeof *new);
+    new->type = OP_NODE;
+    new->data.op = op;
+    new->left = l;
+    new->right = r;
     return new;
 }
 
