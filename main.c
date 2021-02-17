@@ -80,8 +80,17 @@ double node_value(struct node *this) {
 }
 
 int main(void) {
-    struct node *calc = node_new_op(ADD, node_new_value(5), node_new_value(2));
-    double val = node_value(calc);
-    printf("Value: %f\n", val);
+    /* ((5 * 2) - 10) + (-25 / 5) = -5 */
+    struct node *calc = node_new_op(ADD,
+        node_new_op(SUB,
+            node_new_op(MULT, node_new_value(5), node_new_value(2)),
+            node_new_value(10)),
+        node_new_op(DIV,
+            node_new_value(-25),
+            node_new_value(5))
+        );
+
+    printf("Value: %f\n", node_value(calc));
+
     node_free(calc);
 }
