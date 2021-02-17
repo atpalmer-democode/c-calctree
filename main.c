@@ -76,6 +76,8 @@ double node_value(struct node *this) {
             return _value_node_value(this);
         case OP_NODE:
             return _op_node_value(this);
+        default:
+            exit(-1); /* unreachable */
     }
 }
 
