@@ -49,15 +49,24 @@ void node_free(struct node *this) {
     free(this);
 }
 
+double node_value(struct node *this);
+
 double _value_node_value(struct node *this) {
     return this->data.value;
 }
 
 double _op_node_value(struct node *this) {
     switch(this->data.op) {
-        /* TODO */
+        case ADD:
+            return node_value(this->left) + node_value(this->right);
+        case SUB:
+            return node_value(this->left) - node_value(this->right);
+        case MULT:
+            return node_value(this->left) * node_value(this->right);
+        case DIV:
+            return node_value(this->left) / node_value(this->right);
         default:
-            return 0;
+            exit(-1); /* unreachable */
     }
 }
 
@@ -71,7 +80,7 @@ double node_value(struct node *this) {
 }
 
 int main(void) {
-    struct node *calc = node_new_value(5);
+    struct node *calc = node_new_op(ADD, node_new_value(5), node_new_value(2));
     double val = node_value(calc);
     printf("Value: %f\n", val);
     node_free(calc);
